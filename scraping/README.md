@@ -3,55 +3,54 @@
 ## 欲しいjsonの形式
 ```json
 {
-    gameDayInfo:{
-        year:'2019',
-        month:'08',
-        days:'01'
+    "gameDayInfo":{
+        "year":2019,
+        "month":8,
+        "days":1
     },
-    pitchingData:{
-        inning:'01',
-        topButtom:"表"
-        pitcher:"投手名",
-        batter::"打者名",
-        ballInfo:{
-            ballNumber:'1',
-            typesOfBall:"スライダー",
-            speed:'143',
-            result:"空振り"
+    "pitchingData":{
+        "inning":1,
+        "topButtom":"表",
+        "pitcher":"投手名",
+        "batter":"打者名",
+        "ballInfo":{
+            "ballNumber":1,
+            "typesOfBall":"スライダー",
+            "speed":143,
+            "result":"空振り"
         },
-        ballInfo:{
-            ballNumber:'2',
-            typesOfBall:"スライダー",
-            speed:'141',
-            result:"左安打"
+        "ballInfo":{
+            "ballNumber":2,
+            "typesOfBall":"スライダー",
+            "speed":141,
+            "result":"左安打"
         },
-        result:{
-            name:"左安打",
-            type:"single"
+        "result":{
+            "name":"左安打",
+            "type":"single"
         }
     },
     {
-        inning:'01',
-        topButtom:"表"
-        pitcher:"投手名",
-        batter::"打者名",
-        ballInfo:{
-            ballNumber:'1',
-            typesOfBall:"スライダー",
-            speed:'143',
-            result:"空振り"
+        "inning":1,
+        "topButtom":"表",
+        "pitcher":"投手名",
+        "batter":"打者名",
+        "ballInfo":{
+            "ballNumber":1,
+            "typesOfBall":"スライダー",
+            "speed":143,
+            "result":"空振り"
         },
-        ballInfo:{
-            ballNumber:'2',
-            typesOfBall:"スライダー",
-            speed:'141',
-            result:"二ゴロ"
+        "ballInfo":{
+            "ballNumber":2,
+            "typesOfBall":"スライダー",
+            "speed":141,
+            "result":"二ゴロ"
         },
-        result:{
-            name:"二ゴロ",
-            type:"ground_out"
+        "result":{
+            "name":"二ゴロ",
+            "type":"ground_out"
         }
-    }
 }
 ```
 
