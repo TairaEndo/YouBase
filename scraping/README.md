@@ -18,8 +18,7 @@
             "typesOfBall":"スライダー",
             "speed":143,
             "result":"空振り"
-        },
-        "ballInfo":{
+        },{
             "ballNumber":2,
             "typesOfBall":"スライダー",
             "speed":141,
@@ -40,8 +39,7 @@
             "typesOfBall":"スライダー",
             "speed":143,
             "result":"空振り"
-        },
-        "ballInfo":{
+        },{
             "ballNumber":2,
             "typesOfBall":"スライダー",
             "speed":141,
