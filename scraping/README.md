@@ -51,6 +51,7 @@
             "name":"二ゴロ",
             "type":"ground_out"
         }
+    }
 }
 ```
 
