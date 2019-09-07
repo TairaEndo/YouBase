@@ -41,4 +41,4 @@ def getData(url):
         print("END!")
 
 # 初期URL    
-getData('https://baseball.sports.smt.docomo.ne.jp/result/games/live_2019080101_09101.html#liveArea')
+getData('https://baseball.sports.smt.docomo.ne.jp/result/games/live_2019080101_01101.html#liveArea')
