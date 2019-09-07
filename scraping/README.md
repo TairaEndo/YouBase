@@ -1,5 +1,59 @@
 # Scraping
 
+## 欲しいjsonの形式
+```json
+{
+    gameDayInfo:{
+        year:'2019',
+        month:'08',
+        days:'01'
+    },
+    pitchingData:{
+        inning:'01',
+        topButtom:"表"
+        pitcher:"投手名",
+        batter::"打者名",
+        ballInfo:{
+            ballNumber:'1',
+            typesOfBall:"スライダー",
+            speed:'143',
+            result:"空振り"
+        },
+        ballInfo:{
+            ballNumber:'2',
+            typesOfBall:"スライダー",
+            speed:'141',
+            result:"左安打"
+        },
+        result:{
+            name:"左安打",
+            type:"single"
+        }
+    },
+    {
+        inning:'01',
+        topButtom:"表"
+        pitcher:"投手名",
+        batter::"打者名",
+        ballInfo:{
+            ballNumber:'1',
+            typesOfBall:"スライダー",
+            speed:'143',
+            result:"空振り"
+        },
+        ballInfo:{
+            ballNumber:'2',
+            typesOfBall:"スライダー",
+            speed:'141',
+            result:"二ゴロ"
+        },
+        result:{
+            name:"二ゴロ",
+            type:"ground_out"
+        }
+    }
+}
+```
 
 ## URLの形式
 
