@@ -3,13 +3,16 @@ import csv
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
+
+
 def getData(url):
     html = urlopen(url)
     bsObj = BeautifulSoup(html, "html.parser")
     
     pitcherName = bsObj.findAll("div", {"class": "name"})[0].get_text()
-    
     batterName = bsObj.findAll("div", {"class": "name"})[1].get_text()
+    inning = bsObj.find("div", {"class": "inning"}).get_text()
+    print(inning)
     print(pitcherName,batterName)
 
     ballTable = bsObj.find("table", {"class": "pitch_archive_table"})
@@ -40,5 +43,10 @@ def getData(url):
         #ここでCSV書き出しとかする
         print("END!")
 
-# 初期URL    
-getData('https://baseball.sports.smt.docomo.ne.jp/result/games/live_2019080101_01101.html#liveArea')
+# Initialize
+if __name__ == '__main__':
+    year = '2019'
+    days = '0801'
+    gameNum = '01'
+    details = '01101'
+    getData(f"https://baseball.sports.smt.docomo.ne.jp/result/games/live_{year}{days}{gameNum}_{details}.html#liveArea")
