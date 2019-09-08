@@ -6,3 +6,5 @@ scraping/.DS_Store
 express/node_modules/
 
 psql.txt
+
+data/vb.numbers
