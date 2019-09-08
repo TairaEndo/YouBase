@@ -18,4 +18,3 @@ app.get('/hometeam', function (req, res) {
 const port = process.env.PORT || 3000;
 app.listen(port);
 console.log('server start listen on port ' + port);
-// module.exports = router;
