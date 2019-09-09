@@ -1,6 +1,15 @@
 <template>
   <div class="index">
     <h1>{{ msg }}</h1>
+    <div class="select">
+      <b-form-select v-model="selected">
+        <option v-for="team in teams" v-bind:value="team.teamname" :key="team.teamname">
+          {{ team.teamname }}
+        </option>
+      </b-form-select>
+      <span>Selected: {{ selected }}</span>
+    </div>
+    
     <div class = "line">
       <p>Bar Chart</p>
       <chart :width="100" :height="50"></chart>
@@ -15,6 +24,7 @@
 <script>
 import Chart from './Chart';
 import Radar from './Radar';
+import axios from 'axios';
 
 export default {
   name: 'Index',
@@ -25,8 +35,15 @@ export default {
   },
   data() {
     return{
-      msg:"Visualizing-Baseball"
+      teams:null,
+      msg:"Visualizing-Baseball",
+      selected: 'teams'
     }
+  },
+  mounted (){
+    axios
+      .get('https://vb-node-api.herokuapp.com/teams')
+      .then(response => (this.teams =response.data))
   }
 }
 </script>
@@ -58,5 +75,9 @@ a {
   float: right;
   width: 45%;
   height: 50%;
+}
+.select{
+  width:20%;
+  margin-left: 4%;
 }
 </style>
