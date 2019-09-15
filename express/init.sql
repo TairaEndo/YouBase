@@ -12,3 +12,4 @@ types_of_ball TEXT,
 ball_result TEXT,
 result TEXT,
 types_of_result TEXT);
+

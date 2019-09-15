@@ -5,6 +5,7 @@
 `brew services stop postgresql`
 
 →ローカルのpsqlにデータを入れていく
+`psql -f ../test.sql -d vb-db `
 →expressにて`node index.js` `heroku local web`を実行してテスト
 →良さそうならherokuへ
 
@@ -27,4 +28,4 @@
 
 これで
 `https://vb-node-api.herokuapp.com/~~~~`
-にアクセスするとresponseが得られる
+にアクセスするとresponseが得られるk

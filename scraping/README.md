@@ -58,7 +58,7 @@
 
 
 ```Javascript
-URL = 'https://baseball.sports.smt.docomo.ne.jp/result/games/live_{year}{days}{gameNumber}_{inning}{topButtom}{battingNum}.html#liveArea'
+URL = 'https://baseball.sports.smt.docomo.ne.jp/result/games/live_{year}{days}{gameNumber}.html#liveArea'
 
 year = '2019'
 days ='0801'
