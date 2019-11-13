@@ -8,3 +8,9 @@ express/node_modules/
 psql.txt
 
 data/vb.numbers
+
+scraping/game_csv/
+
+scraping/game_sql/
+
+scraping/
