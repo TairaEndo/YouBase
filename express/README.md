@@ -11,7 +11,7 @@
 
 ## heroku側
 `heroku addons`してAdd-onの名前を確認
-→`cat example.sql | heroku pg:psql postgresql-octagonal-49562 --app vb-node-api`
+→`cat example.sql | heroku pg:psql postgresql-curved-26605 --app vb-sql`
 でheroku側にexample.sqlに記載したtableが作られたりデータが入る
 
 (`heroku pg:psql postgresql-octagonal-49562 --app vb-node-api`
