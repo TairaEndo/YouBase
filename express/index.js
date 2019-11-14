@@ -22,6 +22,13 @@ app.get('/hometeam', function (req, res) {
     });
 });
 
+app.get('/average/:name', function (req, res) {
+  db.any(`SELECT gamenum,${name} FROM average;`)
+    .then(function (data) {
+      res.json(data);
+  });
+});
+
 app.get('/teams', function (req, res) {
     db.any("SELECT teamname,shortname FROM teaminfo;")
       .then(function (data) {
