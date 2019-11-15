@@ -1,27 +1,27 @@
 <template>
-  <div id="app">
-    <Index/>
-  </div>
+  <v-app>
+    <v-app-bar app>
+      <v-toolbar-title class="headline text-uppercase">
+        <span class="font-weight-light">Visualising Baseball</span>
+      </v-toolbar-title>
+    </v-app-bar>
+
+    <Index />
+  </v-app>
 </template>
 
 <script>
-import Index from './components/Index.vue'
+import Index from "./components/Index";
 
 export default {
-  name: 'app',
+  name: "App",
+
   components: {
     Index
-  }
-}
-</script>
+  },
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+  data: () => ({
+    //
+  })
+};
+</script>

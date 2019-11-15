@@ -1,160 +1,115 @@
 <template>
-  <div class="index">
-    <h1>{{ msg }}</h1>
-    <div class="select">
-      <b-form-select v-on:change="chooseTeam" v-model="selectedTeam">
-        <option  v-for="team in teams" v-bind:value="team.shortname" :key="team.teamname">
-          {{ team.teamname }}
-        </option>
-      </b-form-select>
-      
-      <b-form-select v-on:change="choosePitcher" v-model="selectedPitcher">
-        <option v-for="pitcher in pitchers" v-bind:value="pitcher.pitchername" :key="pitcher.pitchername">
-          {{ pitcher.pitchername }}
-        </option>
-      </b-form-select>
+  <v-container>
+    <div>
+      <v-card style="margin-top:100px;" class="mx-auto" max-width="600" outlined>
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-list-item-title class="headline mb-1">打率変化</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <apexchart type="line" height="300" :options="chartOptions" :series="series" />
+        <v-row align="center" justify="space-around">
+          <v-col cols="10">
+            <v-select
+              v-model="value"
+              v-on:change="updateChart(value)"
+              :items="items"
+              chips
+              multiple
+              :append-icon="'mdi-plus'"
+              label="選手を選択"
+            ></v-select>
+          </v-col>
+        </v-row>
+      </v-card>
     </div>
-    
-    <div class = "line">
-      <reactive-bar :chart-data="datacollection"></reactive-bar>
-    </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
-import Chart from './Chart';
-import Radar from './Radar';
-import ReactiveBar from './ReactiveBar';
-import axios from 'axios';
+import axios from "axios";
+import Vue from "vue";
+import VueApexCharts from "vue-apexcharts";
 
+Vue.use(VueApexCharts);
+Vue.component("apexchart", VueApexCharts);
 export default {
-  name: 'Index',
-  components:{
-    Chart,
-    Radar,
-    ReactiveBar
+  data: function() {
+    return {
+      items: ["YamadaTetsuto", "SuzukiSeiya", "SakamotoHayato"],
+      value: [],
+      averageData: [],
+      chartOptions: {
+        xaxis: {
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
+          type: 'datetime',
+        },
+         yaxis: {
+            title: {
+              text: 'Average'
+            },
+            min: 0,
+            max: 0.5
+          },
+      },
+      series: [
+        {
+          name: "series-1",
+          data: [30, 40, 45, 50, 49, 60, 70, 91]
+        }
+      ]
+    };
   },
-  data() {
-    return{
-      teams:null,
-      pitchers:null,
-      msg:"Visualizing-Baseball",
-      selectedTeam: 'teams',
-      selectedPitcher:'投手',
-      pitcherdata:null,
-      avgspeed:null,
-      datacollection: null,
-      pitcherInning:[],
-      inningBallSpeed:[]
+  watch: {
+    multiple(val) {
+      if (val) this.model = [this.model];
+      else this.model = this.model[0] || "Foo";
     }
   },
-  created () { 
-    //anytime the vue instance is created, call the fillData() function.
-    this.fillData()
-  },
-  mounted (){
-    axios
-      .get('https://vb-node-api.herokuapp.com/teams')
-      .then(response => (this.teams =response.data))
-  },
-  methods:{
-    fillData () {
-      this.datacollection = {
-        // Data for the y-axis of the chart
-        labels: [],
-        datasets: []
-      }
-    },
-    chooseTeam: function(){
-      axios
-        .get(`https://vb-node-api.herokuapp.com/${this.selectedTeam}/pitcher`)
-        .then(response => (this.pitchers =response.data))
-    },
-    choosePitcher: function(){
-      axios
-        .get(`https://vb-node-api.herokuapp.com/pitcher/${this.selectedPitcher}`)
-        .then(response => {
-          this.pitcherdata = response.data;
-          testfunc();
+  methods: {
+    updateChart(value) {
+      // const options = { xaxis: { categories: [] } };
+      // const datas = [];
+      // value.forEach((player, i) => {
+      //   datas.push([{ name: `${player}`, data: [] }]);
+      //   axios
+      //     .get(`https://vb-sql.herokuapp.com/average/${player}`)
+      //     .then(response => {
+      //       const gamenumArray = [];
+      //       response.data.forEach(data => {
+      //         gamenumArray.push(data.gamenum);
+      //         datas[i][0].data.push(data[`$player`]);
+      //       });
+      //       options.xaxis.categories = gamenumArray;
+      //       this.averageData = response.data;
+      //     });
+      // });
 
-          let inning = 0;
-          let inningArray={'inning':[],'avgspeed':[]};
-          let speeds = [];
-          this.pitcherdata.forEach((el,index) => {
-            if(inning!=el.inning){
-              inningArray['inning'].push(el.inning);
-            }
-            inning = el.inning
+      // this.chartOptions = options;
+      // this.series = datas[0];
+
+      axios.get(`https://vb-sql.herokuapp.com/average/`).then(response => {
+        // this.averageData = response.data;
+        // console.log(response)
+        const chartOptions_data = { xaxis: { categories: [],type: 'datetime'} };
+        const series_data = [];
+        value.forEach((player, i) => {
+          series_data.push({ name: player, data: [] });
+          response.data.forEach(element => {
+            // console.log(Date.parse(element.GameDate))
+            // chartOptions_data.xaxis.categories.push(element.gamenum);
+            chartOptions_data.xaxis.categories.push(Date.parse(element.GameDate));
+
+            series_data[i].data.push(Math.round(element[player]*1000)/1000);
+            // console.log(element[player])
           });
-          inningArray["inning"].forEach(el=>{
-            speeds[el] = []
-          })
-          this.pitcherdata.forEach((el,index)=>{
-            speeds[el.inning].push(el.ballspeed)
-          })
-          console.log(speeds)
-          speeds.forEach(el=>{
-            inningArray["avgspeed"].push(avg(el));
-          })
-          function avg(arr){
-            let res = arr.reduce( ( pre, curr, i )=> {
-              return pre + curr;
-            }, 0 ) / arr.length;
-            return( res );
-          }
+        });
+        // const series_data = [{ name: value[0], data: [] }];
 
-          this.datacollection = {
-            labels:inningArray["inning"],
-            datasets: [
-              {
-                label: this.selectedPitcher+'のイニング別平均球速',
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor:'rgba(255, 99, 132, 1)',
-                borderWidth:1,
-                // Data for the x-axis of the chart
-                data:inningArray["avgspeed"]
-              }
-            ]
-          }
-        })
-      function testfunc(){
-          console.log("test")
-      }
-    },
+        this.chartOptions = chartOptions_data;
+        this.series = series_data;
+      });
+    }
   }
-}
+};
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-.line{
-  margin-left: 2%;
-  float: left;
-  width: 45%;
-  height: 50%;
-}
-.radar{
-  margin-right: 2%;
-  float: right;
-  width: 45%;
-  height: 50%;
-}
-.select{
-  width:20%;
-  margin-left: 4%;
-}
-</style>

@@ -1,4 +1,4 @@
-# front
+# vuetify-flont
 
 ## Project setup
 ```
