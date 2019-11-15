@@ -1,4 +1,4 @@
-# vuetify-flont
+# Visualising Baseball
 
 ## Project setup
 ```
