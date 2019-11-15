@@ -14,11 +14,11 @@
 →`cat example.sql | heroku pg:psql postgresql-curved-26605 --app vb-sql`
 でheroku側にexample.sqlに記載したtableが作られたりデータが入る
 
-(`heroku pg:psql postgresql-octagonal-49562 --app vb-node-api`
+(`heroku pg:psql postgresql-curved-26605 --app vb-sql`
 でheroku側のデータベースに入れる)
 
 ### herokuにpush
-`heroku git:remote -a vb-node-api`
+`heroku git:remote -a vb-sql`
 
 `git add .`
 
@@ -27,5 +27,5 @@
 `git push heroku master`
 
 これで
-`https://vb-node-api.herokuapp.com/~~~~`
+`https://vb-sql.herokuapp.com/~~~~`
 にアクセスするとresponseが得られるk
