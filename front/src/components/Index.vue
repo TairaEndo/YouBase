@@ -11,8 +11,8 @@
         <v-row align="center" justify="space-around">
           <v-col cols="10">
             <v-select
-              v-model="value"
-              v-on:change="updateChart(value)"
+              v-model="players"
+              v-on:change="updateChart(players)"
               :items="items"
               chips
               multiple
@@ -21,7 +21,21 @@
             ></v-select>
           </v-col>
         </v-row>
+        <v-row align="center" justify="space-around">
+          <v-col cols="10">
+            <v-range-slider
+              v-on:change="updateChart(players)"
+              label="表示範囲"
+              step="0.05"
+              min="0"
+              max="1"
+              v-model="range"
+              thumb-label
+            ></v-range-slider>
+          </v-col>
+        </v-row>
       </v-card>
+      <v-container style="margin-bottom: 100%"></v-container>
     </div>
   </v-container>
 </template>
@@ -36,80 +50,89 @@ Vue.component("apexchart", VueApexCharts);
 export default {
   data: function() {
     return {
-      items: ["YamadaTetsuto", "SuzukiSeiya", "SakamotoHayato"],
-      value: [],
-      averageData: [],
+      items: [],
+      players: [],
+      range: [0, 1],
       chartOptions: {
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
-          type: 'datetime',
+          categories: [],
+          type: "datetime"
         },
-         yaxis: {
-            title: {
-              text: 'Average'
-            },
-            min: 0,
-            max: 0.5
+        yaxis: {
+          title: {
+            text: "Average"
           },
+          min: 0,
+          max: 1
+        }
       },
       series: [
         {
           name: "series-1",
-          data: [30, 40, 45, 50, 49, 60, 70, 91]
+          data: []
         }
       ]
     };
   },
-  watch: {
-    multiple(val) {
-      if (val) this.model = [this.model];
-      else this.model = this.model[0] || "Foo";
-    }
-  },
   methods: {
-    updateChart(value) {
-      // const options = { xaxis: { categories: [] } };
-      // const datas = [];
-      // value.forEach((player, i) => {
-      //   datas.push([{ name: `${player}`, data: [] }]);
-      //   axios
-      //     .get(`https://vb-sql.herokuapp.com/average/${player}`)
-      //     .then(response => {
-      //       const gamenumArray = [];
-      //       response.data.forEach(data => {
-      //         gamenumArray.push(data.gamenum);
-      //         datas[i][0].data.push(data[`$player`]);
-      //       });
-      //       options.xaxis.categories = gamenumArray;
-      //       this.averageData = response.data;
-      //     });
-      // });
-
-      // this.chartOptions = options;
-      // this.series = datas[0];
-
+    updateChart(players) {
       axios.get(`https://vb-sql.herokuapp.com/average/`).then(response => {
-        // this.averageData = response.data;
-        // console.log(response)
-        const chartOptions_data = { xaxis: { categories: [],type: 'datetime'} };
+        const chartOptions_data = {
+          annotations: {
+            xaxis: [
+              {
+                x: new Date("4 Jun 2019").getTime(),
+                x2: new Date("25 Jun 2019").getTime(),
+                fillColor: "#B3F7CA",
+                opacity: 0.4,
+                label: {
+                  borderColor: "#B3F7CA",
+                  style: {
+                    fontSize: "10px",
+                    color: "#fff",
+                    background: "#00E396"
+                  },
+                  offsetY: -10,
+                  text: "交流戦"
+                }
+              }
+            ]
+          },
+          xaxis: { categories: [], type: "datetime" },
+          yaxis: {
+            title: {
+              text: "Average"
+            },
+            min: this.range[0],
+            max: this.range[1]
+          }
+        };
         const series_data = [];
-        value.forEach((player, i) => {
+        players.forEach((player, i) => {
           series_data.push({ name: player, data: [] });
           response.data.forEach(element => {
-            // console.log(Date.parse(element.GameDate))
-            // chartOptions_data.xaxis.categories.push(element.gamenum);
-            chartOptions_data.xaxis.categories.push(Date.parse(element.GameDate));
-
-            series_data[i].data.push(Math.round(element[player]*1000)/1000);
-            // console.log(element[player])
+            chartOptions_data.xaxis.categories.push(
+              Date.parse(element.GameDate)
+            );
+            series_data[i].data.push(Math.round(element[player] * 1000) / 1000);
           });
         });
-        // const series_data = [{ name: value[0], data: [] }];
-
         this.chartOptions = chartOptions_data;
         this.series = series_data;
       });
     }
+  },
+  created: function() {
+    const index = [];
+    axios.get("https://vb-sql.herokuapp.com/average/").then(response => {
+      Object.keys(response.data[0]).forEach((el, i) => {
+        if (i >= 2) {
+          index.push(`${el}`);
+        }
+      });
+    });
+
+    this.items = index;
   }
 };
 </script>
