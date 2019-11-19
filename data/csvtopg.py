@@ -4,7 +4,7 @@ import psycopg2
 
 path = "localhost"
 port = "5432"
-dbname = "vb-db"
+dbname = "vb_db"
 
 conText = "host={} port={} dbname={}"
 conText = conText.format(path,port,dbname)
