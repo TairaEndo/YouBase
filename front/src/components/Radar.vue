@@ -101,6 +101,7 @@ export default {
         },
         yaxis: {
           show: false,
+          tickAmount:5,
           min: 0,
           max: 5
         },
