@@ -21,67 +21,67 @@ export default {
         {
           name: "読売",
           data: [
-            2 * (5 - 3.77),
-            (5 * 137) / 200,
-            (110 - 72) * 0.07,
-            (5 * 83) / 120,
-            (0.422 - 0.3) * 40,
-            (0.335 - 0.3) * 120
+            this.toRaderData(3.77, 0),
+            this.toRaderData(137, 1),
+            this.toRaderData(72, 2),
+            this.toRaderData(83, 3),
+            this.toRaderData(0.422, 4),
+            this.toRaderData(0.335, 5)
           ]
         },
         {
           name: "DeNA",
           data: [
-            2 * (5 - 3.93),
-            (5 * 133) / 200,
-            (110 - 97) * 0.07,
-            (5 * 62) / 120,
-            (0.398 - 0.3) * 40,
-            (0.329 - 0.3) * 120
+            this.toRaderData(3.93, 0),
+            this.toRaderData(133, 1),
+            this.toRaderData(97, 2),
+            this.toRaderData(62, 3),
+            this.toRaderData(0.398, 4),
+            this.toRaderData(0.329, 5)
           ]
         },
         {
           name: "阪神",
           data: [
-            2 * (5 - 3.46),
-            (5 * 174) / 200,
-            (110 - 65) * 0.07,
-            (5 * 40) / 120,
-            (0.398 - 0.3) * 40,
-            (0.315 - 0.3) * 120
+            this.toRaderData(3.46, 0),
+            this.toRaderData(174, 1),
+            this.toRaderData(65, 2),
+            this.toRaderData(40, 3),
+            this.toRaderData(0.398, 4),
+            this.toRaderData(0.315, 5)
           ]
         },
         {
           name: "広島",
           data: [
-            2 * (5 - 3.68),
-            (5 * 119) / 200,
-            (110 - 87) * 0.07,
-            (5 * 81) / 120,
-            (0.392 - 0.3) * 40,
-            (0.324 - 0.3) * 120
+            this.toRaderData(3.68, 0),
+            this.toRaderData(119, 1),
+            this.toRaderData(87, 2),
+            this.toRaderData(81, 3),
+            this.toRaderData(0.392, 4),
+            this.toRaderData(0.315, 5)
           ]
         },
         {
           name: "中日",
           data: [
-            2 * (5 - 3.72),
-            (5 * 142) / 200,
-            (110 - 45) * 0.07,
-            (5 * 63) / 120,
-            (0.381 - 0.3) * 40,
-            (0.317 - 0.3) * 120
+            this.toRaderData(3.72, 0),
+            this.toRaderData(142, 1),
+            this.toRaderData(45, 2),
+            this.toRaderData(63, 3),
+            this.toRaderData(0.381, 4),
+            this.toRaderData(0.317, 5)
           ]
         },
         {
           name: "ヤクルト",
           data: [
-            2 * (5 - 4.78),
-            (5 * 133) / 200,
-            (110 - 102) * 0.07,
-            (5 * 100) / 120,
-            (0.362 - 0.3) * 40,
-            (0.319 - 0.3) * 120
+            this.toRaderData(4.78, 0),
+            this.toRaderData(133, 1),
+            this.toRaderData(102, 2),
+            this.toRaderData(100, 3),
+            this.toRaderData(0.362, 4),
+            this.toRaderData(0.319, 5)
           ]
         }
       ],
@@ -99,44 +99,203 @@ export default {
             top: 1
           }
         },
+        yaxis: {
+          show: false,
+          min: 0,
+          max: 5
+        },
         stroke: {
-          width: 0
+          colors: [
+            "#ff7043",
+            "#73bae2",
+            "#fad201",
+            "#d86364",
+            "#696ad2",
+            "#b2d264"
+          ],
+          width: 3
         },
         fill: {
           colors: [
-            "#ff4500",
-            "#00bfff",
-            "#ffff00",
-            "#ff0000",
-            "#0000cd",
-            "#00ff00"
+            "#ff7043",
+            "#73bae2",
+            "#fad201",
+            "#d86364",
+            "#696ad2",
+            "#b2d264"
           ],
-          opacity: 0.4
-        },
-        legend:{
-            markers:{
-                fillColors:[
-            "#ff4500",
-            "#00bfff",
-            "#ffff00",
-            "#ff0000",
-            "#0000cd",
-            "#00ff00"
-          ]
-            }
+          opacity: 0.1
         },
         markers: {
-          size: 0
+          size: 4,
+          colors: ["#fff"],
+          strokeColor: [
+            "#ff7043",
+            "#73bae2",
+            "#fad201",
+            "#d86364",
+            "#696ad2",
+            "#b2d264"
+          ],
+          strokeWidth: 1
+        },
+        tooltip: {
+          x: {
+            show: true,
+            formatter: function(val, i) {
+              let returnvalue = "";
+              switch (i.dataPointIndex) {
+                case 0:
+                  returnvalue = "防御率";
+                  break;
+                case 1:
+                  returnvalue = "ホールドポイント";
+                  break;
+                case 2:
+                  returnvalue = "失策数";
+                  break;
+                case 3:
+                  returnvalue = "盗塁数";
+                  break;
+                case 4:
+                  returnvalue = "長打率";
+                  break;
+                case 5:
+                  returnvalue = "出塁率";
+                  break;
+                default:
+                  break;
+              }
+              return returnvalue;
+            }
+          },
+          y: {
+            formatter: function(val, i) {
+              let result = "";
+              const el = i.dataPointIndex;
+              result = toRawData(val, el);
+              function toRawData(value, i) {
+                let returnvalue = "";
+                switch (i) {
+                  case 0:
+                    returnvalue = -(value / 2 - 5);
+                    break;
+                  case 1:
+                    returnvalue = Math.round((200 * value) / 5);
+                    break;
+                  case 2:
+                    returnvalue = Math.round(-(value / 0.07 - 112));
+                    break;
+                  case 3:
+                    returnvalue = Math.round((value * 120) / 5);
+                    break;
+                  case 4:
+                    returnvalue = value / 40 + 0.3;
+                    break;
+                  case 5:
+                    returnvalue = value / 120 + 0.3;
+                    break;
+
+                  default:
+                    returnvalue = value;
+                    break;
+                }
+                return returnvalue;
+              }
+              return result;
+            }
+          },
+          marker: {
+            fillColors: [
+              "#ff7043",
+              "#73bae2",
+              "#fad201",
+              "#d86364",
+              "#696ad2",
+              "#b2d264"
+            ]
+          }
+        },
+        legend: {
+          markers: {
+            fillColors: [
+              "#ff7043",
+              "#73bae2",
+              "#fad201",
+              "#d86364",
+              "#696ad2",
+              "#b2d264"
+            ]
+          }
         },
         labels: ["投手力", "中継力", "守備力", "走力", "長打力", "出塁力"]
       }
     };
-  }
+  },
+  methods: {
+    toRaderData(value, i) {
+      let returnvalue = "";
+      switch (i) {
+        case 0:
+          returnvalue = 2 * (5 - value);
+          break;
+        case 1:
+          returnvalue = (5 * value) / 200;
+          break;
+        case 2:
+          returnvalue = (112 - value) * 0.07;
+          break;
+        case 3:
+          returnvalue = (5 * value) / 120;
+          break;
+        case 4:
+          returnvalue = (value - 0.3) * 40;
+          break;
+        case 5:
+          returnvalue = (value - 0.3) * 120;
+          break;
+
+        default:
+          returnvalue = value;
+          break;
+      }
+      return returnvalue;
+    },
+    toRawData(value, i) {
+      let returnvalue = "";
+      switch (i) {
+        case 0:
+          returnvalue = -(value / 2 - 5);
+          break;
+        case 1:
+          returnvalue = (200 * value) / 5;
+          break;
+        case 2:
+          returnvalue = value / 0.07 - 112;
+          break;
+        case 3:
+          returnvalue = (value * 120) / 5;
+          break;
+        case 4:
+          returnvalue = value / 40 + 0.3;
+          break;
+        case 5:
+          returnvalue = value / 120 + 0.3;
+          break;
+
+        default:
+          returnvalue = value;
+          break;
+      }
+      return returnvalue;
+    }
+  },
+  created() {}
 };
 </script>
 
 <style scoped>
-.contain{
-    padding-top: 80px;
+.contain {
+  padding-top: 80px;
 }
 </style>
