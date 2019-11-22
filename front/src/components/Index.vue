@@ -1,5 +1,4 @@
 <template>
-  <!-- <v-container> -->
   <div>
     <v-row justify="center">
       <v-col class="col">
@@ -13,13 +12,12 @@
       </v-col>
     </v-row>
   </div>
-  <!-- </v-container> -->
 </template>
 
 <script>
 import average from "./Average.vue";
 import homerun from "./HR.vue";
-import ops from "./OPS.vue"
+import ops from "./OPS.vue";
 
 export default {
   components: {
@@ -35,10 +33,8 @@ export default {
 };
 </script>
 <style scoped>
-.col{
-  /* padding: 0px; */
+.col {
   max-width: 400px;
   margin-top: 80px;
-  /* margin: 10px; */
 }
 </style>
