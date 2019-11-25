@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import average from "./Average.vue";
-import homerun from "./HR.vue";
-import ops from "./OPS.vue";
+import average from "./BatterComponents/Average"
+import homerun from "./BatterComponents/HR"
+import ops from "./BatterComponents/OPS"
 
 export default {
   components: {

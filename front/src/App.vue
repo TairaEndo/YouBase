@@ -13,36 +13,34 @@
 
     <v-tabs-items v-model="tab">
       <v-tab-item>
-        <Index />
+        <Batter />
       </v-tab-item>
       <v-tab-item>
         <Pitcher />
       </v-tab-item>
       <v-tab-item>
-        <radar />
+        <Team />
       </v-tab-item>
     </v-tabs-items>
-    <!-- </v-tabs> -->
   </v-app>
 </template>
 
 <script>
-import Index from "./components/Index";
 import Pitcher from "./components/Pitcher";
-import radar from "./components/Radar"
+import Batter from "./components/Batter";
+import Team from "./components/Team";
 
 export default {
   name: "App",
 
   components: {
-    Index,
     Pitcher,
-    radar
+    Batter,
+    Team
   },
 
   data: () => ({
     tab: null
-    //
   })
 };
 </script>

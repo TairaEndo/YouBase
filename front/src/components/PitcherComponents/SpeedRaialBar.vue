@@ -32,7 +32,7 @@ export default {
           radialBar: {
             offsetY: -10,
             startAngle: 0,
-            endAngle: 270,
+            endAngle: 360,
             hollow: {
               margin: 5,
               size: "30%",

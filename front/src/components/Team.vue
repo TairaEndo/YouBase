@@ -1,15 +1,15 @@
 <template>
   <div>
-      <speedradial class="speed"></speedradial>
+      <radar></radar>
   </div>
 </template>
 
 <script>
-import speedradial from "./PitcherComponents/SpeedRaialBar";
+import radar from "./TeamComponents/Radar"
 
 export default {
   components: {
-    speedradial,
+    radar,
   },
   data: function() {
     return {};
@@ -19,7 +19,5 @@ export default {
 };
 </script>
 <style scoped>
-.speed{
-  padding-top: 80px; 
-}
+
 </style>
