@@ -11,19 +11,36 @@
         <homerun></homerun>
       </v-col>
     </v-row>
+    <v-row justify="center">
+      <v-col class="col">
+        <rbi></rbi>
+      </v-col>
+      <v-col class="col">
+        <hit></hit>
+      </v-col>
+      <v-col class="col">
+        <bb></bb>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
-import average from "./BatterComponents/Average"
-import homerun from "./BatterComponents/HR"
-import ops from "./BatterComponents/OPS"
+import average from "./BatterComponents/Average";
+import homerun from "./BatterComponents/HR";
+import ops from "./BatterComponents/OPS";
+import bb from "./BatterComponents/BB";
+import rbi from "./BatterComponents/Rbi";
+import hit from "./BatterComponents/Hit";
 
 export default {
   components: {
     average,
     homerun,
-    ops
+    ops,
+    hit,
+    bb,
+    rbi
   },
   data: function() {
     return {};

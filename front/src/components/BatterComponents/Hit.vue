@@ -9,7 +9,7 @@
           <v-card>
             <v-card-text>チーム選択とかつける</v-card-text>
           </v-card>
-        </v-menu>打率変化
+        </v-menu>安打数変化
       </v-card-title>
       <apexchart type="line" height="250" width="370" :options="chartOptions" :series="series" />
       <v-row align="center" justify="space-around">
@@ -32,9 +32,9 @@
           <v-range-slider
             v-on:change="updateChart(players)"
             label="表示範囲"
-            step="0.05"
+            step="5"
             min="0"
-            max="1"
+            max="220"
             v-model="range"
             thumb-label
           ></v-range-slider>
@@ -57,7 +57,7 @@ export default {
       menu: false,
       players: ['YamadaTetsuto'],
       players_data: [],
-      range: [0, 0.5],
+      range: [0, 200],
       chartOptions: {
         annotations: {
           xaxis: [
@@ -82,10 +82,10 @@ export default {
         xaxis: { categories: [], type: "datetime" },
         yaxis: {
           title: {
-            text: "打率"
+            text: "Average"
           },
           min: 0,
-          max: 0.5
+          max: 200
         }
       },
       series: []
@@ -117,7 +117,7 @@ export default {
         xaxis: { categories: [], type: "datetime" },
         yaxis: {
           title: {
-            text: "Average"
+            text: "安打数"
           },
           min: this.range[0],
           max: this.range[1]
@@ -125,16 +125,17 @@ export default {
       };
       const series_data = [];
 
-      axios.get("https://vb-sql.herokuapp.com/B_AVG").then(response => {
+      axios.get("https://vb-sql.herokuapp.com/B_H").then(response => {
         const dates = response.data.map(x => Date.parse(x.GameDate));
         chartOptions_data.xaxis.categories = dates;
         players.forEach((p, i) => {
-          const bname = this.players_data.filter(el=>{
-              return el.batter === p
-          })
-          series_data.push({ name: bname[0].batter_jp, data: []});
+          const bname = this.players_data.filter(el => {
+            return el.batter === p;
+          });
+          series_data.push({ name: bname[0].batter_jp, data: [], all: 0 });
           response.data.forEach(el => {
-            series_data[i].data.push(el[`${p}`]);
+            series_data[i].all += parseInt(el[`${p}`]);
+            series_data[i].data.push(series_data[i].all);
           });
         });
         this.chartOptions = chartOptions_data;
@@ -145,7 +146,6 @@ export default {
   created: function() {
     axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
       this.players_data = response.data;
-      console.log(this.players_data)
     });
     this.updateChart(this.players)
   }
