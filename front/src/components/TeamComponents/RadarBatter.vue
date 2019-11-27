@@ -10,7 +10,7 @@ let label_data = [];
 Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 export default {
-  props: ["year", "teamShortName", "teamLongName", "teamColor","leage"],
+  props: ["year", "teamShortName", "teamLongName", "teamColor"],
   data: function() {
     return {
       series: [],
@@ -18,8 +18,18 @@ export default {
         title: {
           text: this.teamLongName
         },
-        theme: {
-          mode: "dark"
+        // theme: {
+        //     mode: "dark"
+        // },
+        plotOptions: {
+          radar: {
+            polygons: {
+              strokeColor: "#e9e9e9",
+              fill: {
+                colors: ["#f8f8f8", "#fff"]
+              }
+            }
+          }
         },
         chart: {
           dropShadow: {
@@ -27,6 +37,9 @@ export default {
             blur: 1,
             left: 1,
             top: 1
+          },
+          toolbar: {
+            show: false
           }
         },
         yaxis: {
@@ -65,7 +78,7 @@ export default {
                   returnvalue = "本塁打数";
                   break;
                 case 3:
-                  returnvalue = "得点数";
+                  returnvalue = "打点数";
                   break;
                 case 4:
                   returnvalue = "盗塁数";
@@ -104,7 +117,7 @@ export default {
     update(val) {
       this.series = [];
       axios
-        .get(`https://vb-sql.herokuapp.com/stats/${val}/${this.leage}/batter`)
+        .get(`https://vb-sql.herokuapp.com/stats/${val}/central/batter`)
         .then(response => {
           response.data.forEach(el => {
             if (el["team_name"] == this.teamShortName) {
@@ -154,7 +167,7 @@ export default {
     }
   },
   created() {
-    this.update(this.year)
+    this.update(this.year);
   }
 };
 </script>

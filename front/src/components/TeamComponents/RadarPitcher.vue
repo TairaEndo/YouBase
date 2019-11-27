@@ -18,8 +18,18 @@ export default {
         title: {
           text: this.teamLongName
         },
-        theme: {
-          mode: "dark"
+        // theme: {
+        //   mode: "dark"
+        // },
+        plotOptions: {
+          radar: {
+            polygons: {
+              strokeColor: "#e9e9e9",
+              fill: {
+                colors: ["#f8f8f8", "#fff"]
+              }
+            }
+          }
         },
         chart: {
           dropShadow: {
@@ -27,6 +37,9 @@ export default {
             blur: 1,
             left: 1,
             top: 1
+          },
+          toolbar: {
+            show: false
           }
         },
         yaxis: {
@@ -111,46 +124,46 @@ export default {
     update(val) {
       this.series = [];
       axios
-      .get(`https://vb-sql.herokuapp.com/stats/${val}/${this.leage}/pitcher`)
-      .then(response => {
-        response.data.forEach(el => {
-          if (el["team_name"] == this.teamShortName) {
-            this.series.push({
-              name: this.teamShortName,
-              data: [
-                this.getNormValue(el["防御率"], 2.78, 4.78, 0.5, 4.5, true),
-                this.getNormValue(
-                  parseInt(el["完投"]) + parseInt(el["完封"]),
-                  5,
-                  37,
-                  0.5,
-                  4.5,
-                  false
-                ),
-                this.getNormValue(el["HP"], 70, 174, 0.5, 4.5, false),
-                this.getNormValue(el["セーブ"], 18, 43, 0.5, 4.5, false),
-                this.getNormValue(
-                  parseInt(el["与四球"]) + parseInt(el["与死球"]),
-                  413,
-                  576,
-                  0.5,
-                  4.5,
-                  true
-                ),
-                this.getNormValue(el["奪三振"], 872, 1223, 0.5, 4.5, true)
-              ]
-            });
-            label_data = [
-              el["防御率"],
-              parseInt(el["完投"]) + parseInt(el["完封"]),
-              el["HP"],
-              el["セーブ"],
-              parseInt(el["与四球"]) + parseInt(el["与死球"]),
-              el["奪三振"]
-            ];
-          }
+        .get(`https://vb-sql.herokuapp.com/stats/${val}/central/pitcher`)
+        .then(response => {
+          response.data.forEach(el => {
+            if (el["team_name"] == this.teamShortName) {
+              this.series.push({
+                name: this.teamShortName,
+                data: [
+                  this.getNormValue(el["防御率"], 2.78, 4.78, 0.5, 4.5, true),
+                  this.getNormValue(
+                    parseInt(el["完投"]) + parseInt(el["完封"]),
+                    5,
+                    37,
+                    0.5,
+                    4.5,
+                    false
+                  ),
+                  this.getNormValue(el["HP"], 70, 174, 0.5, 4.5, false),
+                  this.getNormValue(el["セーブ"], 18, 43, 0.5, 4.5, false),
+                  this.getNormValue(
+                    parseInt(el["与四球"]) + parseInt(el["与死球"]),
+                    413,
+                    576,
+                    0.5,
+                    4.5,
+                    true
+                  ),
+                  this.getNormValue(el["奪三振"], 872, 1223, 0.5, 4.5, true)
+                ]
+              });
+              label_data = [
+                el["防御率"],
+                parseInt(el["完投"]) + parseInt(el["完封"]),
+                el["HP"],
+                el["セーブ"],
+                parseInt(el["与四球"]) + parseInt(el["与死球"]),
+                el["奪三振"]
+              ];
+            }
+          });
         });
-      });
     },
     getNormValue(target, minimum, maximum, minPos, maxPos, reverse) {
       let normValue = "";
@@ -168,7 +181,7 @@ export default {
     }
   },
   created() {
-    this.update(this.year)
+    this.update(this.year);
   }
 };
 </script>
