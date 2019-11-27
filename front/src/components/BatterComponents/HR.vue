@@ -57,7 +57,7 @@ export default {
   data: function() {
     return {
       menu: false,
-      players: ['YamadaTetsuto'],
+      players: ['SotoNeftali','MurakamiMunetaka'],
       players_data: [],
       range: [0, 50],
       chartOptions: {
