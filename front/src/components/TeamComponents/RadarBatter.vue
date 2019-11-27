@@ -10,7 +10,7 @@ let label_data = [];
 Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 export default {
-  props: ["year", "teamShortName", "teamLongName", "teamColor"],
+  props: ["year", "teamShortName", "teamLongName", "teamColor","leage"],
   data: function() {
     return {
       series: [],
@@ -104,7 +104,7 @@ export default {
     update(val) {
       this.series = [];
       axios
-        .get(`https://vb-sql.herokuapp.com/stats/${val}/central/batter`)
+        .get(`https://vb-sql.herokuapp.com/stats/${val}/${this.leage}/batter`)
         .then(response => {
           response.data.forEach(el => {
             if (el["team_name"] == this.teamShortName) {

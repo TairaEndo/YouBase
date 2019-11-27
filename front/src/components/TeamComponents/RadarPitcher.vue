@@ -111,7 +111,7 @@ export default {
     update(val) {
       this.series = [];
       axios
-      .get(`https://vb-sql.herokuapp.com/stats/${val}/central/pitcher`)
+      .get(`https://vb-sql.herokuapp.com/stats/${val}/${this.leage}/pitcher`)
       .then(response => {
         response.data.forEach(el => {
           if (el["team_name"] == this.teamShortName) {
