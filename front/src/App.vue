@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-toolbar-title style="width:350px;" class="headline text-uppercase">
-        <span class="font-weight-light">Visualising Baseball</span>
+      <v-toolbar-title style="width:120px;" class="headline">
+        <span class="font-weight-light">YouBase</span>
       </v-toolbar-title>
       <v-tabs v-model="tab">
         <v-tab>野手</v-tab>

@@ -1,0 +1,168 @@
+<template>
+    <apexchart type="radar" height="250" width="300" :options="chartOptions" :series="series" />
+</template>
+
+<script>
+import axios from "axios";
+import Vue from "vue";
+import VueApexCharts from "vue-apexcharts";
+let label_data = []
+Vue.use(VueApexCharts);
+Vue.component("apexchart", VueApexCharts);
+export default {
+  data: function() {
+    return {
+      series: [],
+      chartOptions: {
+        title: {
+          text: "読売ジャイアンツ"
+        },
+        theme: {
+          mode: "dark"
+        },
+        chart: {
+          dropShadow: {
+            enabled: true,
+            blur: 1,
+            left: 1,
+            top: 1
+          }
+        },
+        yaxis: {
+          show: false,
+          tickAmount: 5,
+          min: 0,
+          max: 5
+        },
+        stroke: {
+          colors: ["#ff7043"],
+          width: 3
+        },
+        fill: {
+          colors: ["#ff7043"],
+          opacity: 0.1
+        },
+        markers: {
+          size: 4,
+          colors: ["#fff"],
+          strokeColor: ["#ff7043"],
+          strokeWidth: 1
+        },
+        tooltip: {
+          x: {
+            show: true,
+            formatter: function(val, i) {
+              let returnvalue = "";
+              switch (i.dataPointIndex) {
+                case 0:
+                  returnvalue = "防御率";
+                  break;
+                case 1:
+                  returnvalue = "完投＋完封";
+                  break;
+                case 2:
+                  returnvalue = "ホールドポイント";
+                  break;
+                case 3:
+                  returnvalue = "セーブ";
+                  break;
+                case 4:
+                  returnvalue = "与四球＋与死球";
+                  break;
+                case 5:
+                  returnvalue = "奪三振数";
+                  break;
+                default:
+                  break;
+              }
+              return returnvalue;
+            }
+          },
+          y: {
+            formatter: function(val, i) {
+              let result = "";
+              const num = i.dataPointIndex;
+              result = label_data[num]
+              return result;
+            }
+          },
+          marker: {
+            fillColors: ["#ff7043"]
+          }
+        },
+        legend: {
+          markers: {
+            fillColors: ["#ff7043"]
+          }
+        },
+        labels: ["総合投手力", "先発力", "中継力", "抑え力", "制球力", "奪三振力"]
+      }
+    };
+  },
+  methods: {
+    getNormValue(target, minimum, maximum, minPos, maxPos, reverse) {
+      let normValue = "";
+      if (!reverse) {
+        normValue =
+          minPos +
+          ((maxPos - minPos) * (target - minimum)) / (maximum - minimum);
+      } else {
+        normValue =
+          minPos +
+          ((maxPos - minPos) * (maximum - target)) / (maximum - minimum);
+      }
+
+      return normValue;
+    }
+  },
+  created() {
+    axios
+      .get("https://vb-sql.herokuapp.com/stats/2019/central/pitcher")
+      .then(response => {
+        response.data.forEach(el => {
+          if (el["team_name"] == "巨人") {
+            this.series.push({
+              name: "巨人",
+              data: [
+                this.getNormValue(el["防御率"], 2.78, 4.78, 0.5, 4.5, true),
+                this.getNormValue(parseInt(el["完投"])+parseInt(el["完封"]), 5, 37, 0.5, 4.5, false),
+                this.getNormValue(el["HP"], 70, 174, 0.5, 4.5, false),
+                this.getNormValue(el["セーブ"], 18, 43, 0.5, 4.5, false),
+                this.getNormValue(parseInt(el["与四球"])+parseInt(el["与死球"]), 413, 576, 0.5, 4.5,true),
+                this.getNormValue(el["奪三振"], 872, 1223, 0.5, 4.5, true)
+              ]
+            });
+            label_data=[
+              el["防御率"],
+              parseInt(el["完投"])+parseInt(el["完封"]),
+              el["HP"],
+              el["セーブ"],
+              parseInt(el["与四球"])+parseInt(el["与死球"]),
+              el["奪三振"]
+            ];
+            console.log(label_data)
+          }
+        });
+      });
+  }
+};
+
+// {'central-league': {'防御率': (4.78, 2.78),
+//   '完投+完封': (37, 5),
+//   'HP': (174, 70),
+//   'セーブ': (43, 18),
+//   '四球+死球': (576, 413),
+//   '奪三振': (1223, 872),
+//   '出塁率': (0.349, 0.3),
+//   '長打率': (0.431, 0.33799999999999997),
+//   '本塁打': (183, 71),
+//   '打点': (705, 434),
+//   '失策': (116, 45),
+//   '盗塁': (118, 39)},
+</script>
+
+<style scoped>
+.contain {
+  padding-top: 80px;
+}
+</style>
