@@ -6,7 +6,7 @@
       </v-toolbar-title>
       <v-tabs v-model="tab">
         <v-tab>野手</v-tab>
-        <v-tab>投手</v-tab>
+        <!-- <v-tab>投手</v-tab> -->
         <v-tab>チーム分析(セ)</v-tab>
         <v-tab>チーム分析(パ)</v-tab>
       </v-tabs>
@@ -16,9 +16,9 @@
       <v-tab-item>
         <Batter />
       </v-tab-item>
-      <v-tab-item>
+      <!-- <v-tab-item>
         <Pitcher />
-      </v-tab-item>
+      </v-tab-item> -->
       <v-tab-item>
         <Central />
       </v-tab-item>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Pitcher from "./components/Pitcher";
+// import Pitcher from "./components/Pitcher";
 import Batter from "./components/Batter";
 import Central from "./components/Central";
 import Pacific from "./components/Pacific";
@@ -39,7 +39,7 @@ export default {
   name: "App",
 
   components: {
-    Pitcher,
+    // Pitcher,
     Batter,
     Central,
     Pacific

@@ -57,7 +57,7 @@ export default {
   data: function() {
     return {
       menu: false,
-      players: [],
+      players: ['YamadaTetsuto'],
       players_data: [],
       range: [0, 50],
       chartOptions: {
@@ -153,6 +153,7 @@ export default {
     axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
       this.players_data = response.data;
     });
+    this.updateChart(this.players)
   }
 };
 </script>
