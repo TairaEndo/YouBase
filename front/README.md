@@ -1,4 +1,4 @@
-# Visualising Baseball
+# YouBase
 
 ## Project setup
 ```
