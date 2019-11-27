@@ -6,9 +6,12 @@
 import axios from "axios";
 import Vue from "vue";
 import VueApexCharts from "vue-apexcharts";
-let label_data = [];
+
 Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
+
+let label_data = {};
+
 export default {
   props: ["year", "teamShortName", "teamLongName", "teamColor"],
   data: function() {
@@ -96,9 +99,9 @@ export default {
             formatter: function(val, i) {
               let result = "";
               const num = i.dataPointIndex;
-              result = label_data[num];
+              result = label_data[i.w.config.series[0].name][num];
               return result;
-            }
+            },
           },
           marker: {
             fillColors: [this.teamColor]
@@ -139,7 +142,7 @@ export default {
                   this.getNormValue(el["失策"], 45, 116, 0.5, 4.5, true)
                 ]
               });
-              label_data = [
+              label_data[this.teamShortName] = [
                 el["出塁率"],
                 el["長打率"],
                 el["本塁打"],
@@ -147,6 +150,7 @@ export default {
                 el["盗塁"],
                 el["失策"]
               ];
+              // label_data[this.teamShortName]=this.label_data
             }
           });
         });

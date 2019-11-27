@@ -6,7 +6,7 @@
 import axios from "axios";
 import Vue from "vue";
 import VueApexCharts from "vue-apexcharts";
-let label_data = [];
+let label_data = {};
 Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 export default {
@@ -96,7 +96,7 @@ export default {
             formatter: function(val, i) {
               let result = "";
               const num = i.dataPointIndex;
-              result = label_data[num];
+              result = label_data[i.w.config.series[0].name][num];
               return result;
             }
           },
@@ -146,7 +146,7 @@ export default {
                   this.getNormValue(el["失策"], 38, 101, 0.5, 4.5, true)
                 ]
               });
-              label_data = [
+              label_data[this.teamShortName]  = [
                 el["出塁率"],
                 el["長打率"],
                 el["本塁打"],
