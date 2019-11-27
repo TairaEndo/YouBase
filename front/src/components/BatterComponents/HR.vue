@@ -150,10 +150,10 @@ export default {
     }
   },
   created: function() {
+    this.updateChart(this.players)
     axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
       this.players_data = response.data;
     });
-    this.updateChart(this.players)
   }
 };
 </script>

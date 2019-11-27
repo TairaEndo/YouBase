@@ -82,7 +82,7 @@ export default {
         xaxis: { categories: [], type: "datetime" },
         yaxis: {
           title: {
-            text: "Average"
+            text: "安打数"
           },
           min: 0,
           max: 200
@@ -144,10 +144,10 @@ export default {
     }
   },
   created: function() {
+    this.updateChart(this.players)
     axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
       this.players_data = response.data;
     });
-    this.updateChart(this.players)
   }
 };
 </script>
