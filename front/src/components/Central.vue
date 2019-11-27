@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row style="padding-top:100px;" justify="center">
+    <v-row style="padding-top:70px;" justify="center">
       <v-card class="card" outlined>
         <v-card-title class="title">
           セリーグ球団別野手レーダー

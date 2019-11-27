@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center">
+    <v-row style="margin-top: 58px;" justify="center">
       <v-col class="col">
         <average></average>
       </v-col>
@@ -35,6 +35,5 @@ export default {
 <style scoped>
 .col {
   max-width: 400px;
-  margin-top: 80px;
 }
 </style>

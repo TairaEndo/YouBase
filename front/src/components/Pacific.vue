@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row style="padding-top:100px;" justify="center">
+    <v-row style="padding-top:70px;" justify="center">
       <v-card class="card" outlined>
         <v-card-title class="title">
           パリーグ球団別野手レーダー
@@ -60,7 +60,6 @@
           ></bradar>
         </v-row>
       </v-card>
-
       <v-card class="card" outlined>
         <v-card-title class="title">
           パリーグ球団別投手レーダー

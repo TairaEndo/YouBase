@@ -1,14 +1,14 @@
 <template>
   <v-app>
     <v-app-bar app>
-      <v-toolbar-title style="width:120px;" class="headline">
+      <v-toolbar-title style="min-width: 100px;" class="headline">
         <span class="font-weight-light">YouBase</span>
       </v-toolbar-title>
       <v-tabs v-model="tab">
         <v-tab>野手</v-tab>
         <!-- <v-tab>投手</v-tab> -->
-        <v-tab>チーム分析(セ)</v-tab>
-        <v-tab>チーム分析(パ)</v-tab>
+        <v-tab>セリーグ</v-tab>
+        <v-tab>パリーグ</v-tab>
       </v-tabs>
     </v-app-bar>
 

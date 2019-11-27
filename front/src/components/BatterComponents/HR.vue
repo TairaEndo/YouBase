@@ -11,7 +11,7 @@
           </v-card>
         </v-menu>本塁打変化
       </v-card-title>
-      <apexchart type="line" height="250" width="380" :options="chartOptions" :series="series" />
+      <apexchart type="line" height="250" width="370" :options="chartOptions" :series="series" />
       <v-row align="center" justify="space-around">
         <v-col class="selector" cols="10">
           <v-select
