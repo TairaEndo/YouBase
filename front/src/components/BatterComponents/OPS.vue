@@ -7,7 +7,7 @@
             <v-app-bar-nav-icon v-on="on" />
           </template>
           <v-card>
-              <v-card-text>チーム選択とかつける</v-card-text>
+            <v-card-text>チーム選択とかつける</v-card-text>
           </v-card>
         </v-menu>OPS変化
       </v-card-title>
@@ -52,13 +52,19 @@ import VueApexCharts from "vue-apexcharts";
 Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 export default {
+  props:{
+    players_data:[]
+  },
   data: function() {
     return {
       menu: false,
-      players: ['ChikamotoKoji','MurakamiMunetaka'],
-      players_data: [],
+      players: ["ChikamotoKoji", "MurakamiMunetaka"],
+      // players_data: [],
       range: [0, 1.5],
       chartOptions: {
+        theme: {
+          palette: "palette4" // upto palette10
+        },
         annotations: {
           xaxis: [
             {
@@ -129,10 +135,10 @@ export default {
         const dates = response.data.map(x => Date.parse(x.GameDate));
         chartOptions_data.xaxis.categories = dates;
         players.forEach((p, i) => {
-        const bname = this.players_data.filter(el=>{
-              return el.batter === p
-        })
-          series_data.push({ name: bname[0].batter_jp, data: []});
+          const bname = this.players_data.filter(el => {
+            return el.batter === p;
+          });
+          series_data.push({ name: bname[0].batter_jp, data: [] });
           response.data.forEach(el => {
             series_data[i].data.push(el[`${p}`]);
           });
@@ -140,22 +146,21 @@ export default {
         this.chartOptions = chartOptions_data;
         this.series = series_data;
       });
-    },
+    }
   },
   created: function() {
-    this.updateChart(this.players)
-    axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
-      this.players_data = response.data;
-    });
-    
+    this.updateChart(this.players);
+    // axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
+    //   this.players_data = response.data;
+    // });
   }
 };
 </script>
 
 <style scoped>
-.contain{
-    padding: 0px;
-    max-width: 400px;
+.contain {
+  padding: 0px;
+  max-width: 400px;
 }
 .card {
   margin: 0px;

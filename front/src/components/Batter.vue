@@ -2,24 +2,24 @@
   <div>
     <v-row style="margin-top: 58px;" justify="center">
       <v-col class="col">
-        <average></average>
+        <average :players_data="players_data"></average>
       </v-col>
       <v-col class="col">
-        <ops></ops>
+        <ops :players_data="players_data"></ops>
       </v-col>
       <v-col class="col">
-        <homerun></homerun>
+        <homerun :players_data="players_data"></homerun>
       </v-col>
     </v-row>
     <v-row justify="center">
       <v-col class="col">
-        <rbi></rbi>
+        <rbi :players_data="players_data"></rbi>
       </v-col>
       <v-col class="col">
-        <hit></hit>
+        <hit :players_data="players_data"></hit>
       </v-col>
       <v-col class="col">
-        <bb></bb>
+        <bb :players_data="players_data"></bb>
       </v-col>
     </v-row>
   </div>
@@ -33,6 +33,8 @@ import bb from "./BatterComponents/BB";
 import rbi from "./BatterComponents/Rbi";
 import hit from "./BatterComponents/Hit";
 
+import axios from "axios";
+
 export default {
   components: {
     average,
@@ -43,10 +45,16 @@ export default {
     rbi
   },
   data: function() {
-    return {};
+    return {
+      players_data:[]
+    };
   },
   methods: {},
-  created: function() {}
+  created: function() {
+    axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
+      this.players_data = response.data;
+    });
+  }
 };
 </script>
 <style scoped>

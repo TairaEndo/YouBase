@@ -52,13 +52,19 @@ import VueApexCharts from "vue-apexcharts";
 Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 export default {
+  props:{
+    players_data:[]
+  },
   data: function() {
     return {
       menu: false,
-      players: ['SotoNeftali','MaedaYamato'],
-      players_data: [],
+      players: ["SotoNeftali", "MaedaYamato"],
+      // players_data: [],
       range: [0, 150],
       chartOptions: {
+        theme: {
+          palette: "palette4" // upto palette10
+        },
         annotations: {
           xaxis: [
             {
@@ -144,10 +150,10 @@ export default {
     }
   },
   created: function() {
-    this.updateChart(this.players)
-    axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
-      this.players_data = response.data;
-    });
+    this.updateChart(this.players);
+    // axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
+    //   this.players_data = response.data;
+    // });
   }
 };
 </script>

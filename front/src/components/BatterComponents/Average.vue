@@ -52,13 +52,20 @@ import VueApexCharts from "vue-apexcharts";
 Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 export default {
+  props:{
+    players_data:[]
+  },
+
   data: function() {
     return {
       menu: false,
-      players: ['MiyazakiToshiro','TsutsugoYoshitomo'],
-      players_data: [],
+      players: ["MiyazakiToshiro", "TsutsugoYoshitomo"],
+      // players_data: [],
       range: [0, 0.5],
       chartOptions: {
+        theme: {
+          palette: "palette4" // upto palette10
+        },
         annotations: {
           xaxis: [
             {
@@ -117,7 +124,7 @@ export default {
         xaxis: { categories: [], type: "datetime" },
         yaxis: {
           title: {
-            text: "Average"
+            text: "打率"
           },
           min: this.range[0],
           max: this.range[1]
@@ -129,10 +136,10 @@ export default {
         const dates = response.data.map(x => Date.parse(x.GameDate));
         chartOptions_data.xaxis.categories = dates;
         players.forEach((p, i) => {
-          const bname = this.players_data.filter(el=>{
-              return el.batter === p
-          })
-          series_data.push({ name: bname[0].batter_jp, data: []});
+          const bname = this.players_data.filter(el => {
+            return el.batter === p;
+          });
+          series_data.push({ name: bname[0].batter_jp, data: [] });
           response.data.forEach(el => {
             series_data[i].data.push(el[`${p}`]);
           });
@@ -143,11 +150,10 @@ export default {
     }
   },
   created: function() {
-    this.updateChart(this.players)
-    axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
-      this.players_data = response.data;
-    });
-    
+    this.updateChart(this.players);
+    // axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
+    //   this.players_data = response.data;
+    // });
   }
 };
 </script>
