@@ -2,16 +2,17 @@
   <v-container class="contain">
     <v-card class="card" outlined>
       <v-card-title class="title">
-        <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x>
+        <v-menu v-model="menu" :close-on-content-click="false" offset-x>
           <template v-slot:activator="{ on }">
             <v-app-bar-nav-icon v-on="on" />
           </template>
           <v-card>
-            <v-card-text>チーム選択とかつける</v-card-text>
+            <v-card-text><v-btn @click="reset()" small>全選手選択解除</v-btn></v-card-text>
           </v-card>
         </v-menu>打点数変化
       </v-card-title>
-      <apexchart type="line" height="250" width="370" :options="chartOptions" :series="series" />
+      <div style="z-index:0;">
+      <apexchart type="line" height="250" width="370" :options="chartOptions" :series="series" /></div>
       <v-row align="center" justify="space-around">
         <v-col class="selector" cols="10">
           <v-select
@@ -53,13 +54,12 @@ Vue.use(VueApexCharts);
 Vue.component("apexchart", VueApexCharts);
 export default {
   props:{
-    players_data:[]
+    players_data:Array
   },
   data: function() {
     return {
       menu: false,
       players: ["SotoNeftali", "MaedaYamato"],
-      // players_data: [],
       range: [0, 150],
       chartOptions: {
         theme: {
@@ -147,13 +147,14 @@ export default {
         this.chartOptions = chartOptions_data;
         this.series = series_data;
       });
+    },
+    reset(){
+      this.players=[]
+      this.updateChart(this.players)
     }
   },
   created: function() {
     this.updateChart(this.players);
-    // axios.get("https://vb-sql.herokuapp.com/info/batter").then(response => {
-    //   this.players_data = response.data;
-    // });
   }
 };
 </script>

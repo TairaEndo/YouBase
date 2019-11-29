@@ -21,9 +21,6 @@ export default {
         title: {
           text: this.teamLongName
         },
-        // theme: {
-        //     mode: "dark"
-        // },
         plotOptions: {
           radar: {
             polygons: {

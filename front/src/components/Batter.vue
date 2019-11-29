@@ -46,7 +46,7 @@ export default {
   },
   data: function() {
     return {
-      players_data:[]
+      players_data: [],
     };
   },
   methods: {},
