@@ -5,7 +5,7 @@
         <span class="font-weight-light">YouBase</span>
       </v-toolbar-title>
       <v-tabs v-model="tab">
-        <v-tab>野手</v-tab>
+        <v-tab>野手データ</v-tab>
         <!-- <v-tab>投手</v-tab> -->
         <v-tab>セリーグ</v-tab>
         <v-tab>パリーグ</v-tab>
